@@ -1457,6 +1457,15 @@ namespace MEC
             if (double.IsNaN(waitTime)) waitTime = 0f;
             return localTime + waitTime;
         }
+        
+        /// <summary>
+        /// Use the given boolean retruning function to pause the coroutine until it returns true.
+        /// </summary>
+        /// <param name="conditionStatement">Boolean function to validate against.</param>
+        public static double WaitUntilTrue(Func<bool> conditionStatement)
+        {
+            return conditionStatement() ? double.NaN : WaitForOneFrame;
+        }
 
         /// <summary>
         /// Use the command "yield return Timing.WaitUntilDone(otherCoroutine);" to pause the current 

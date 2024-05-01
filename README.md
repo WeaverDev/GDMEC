@@ -29,16 +29,21 @@ This is a non-exhaustive list, check the [original documentation](http://trinary
 MEC has the following functions to yield on.
 - `Timing.WaitForOneFrame` - Yields for one frame
 - `Timing.WaitForSeconds(seconds)` - Yields for the given number of seconds
+- `Timing.WaitUntilTrue(booleanFunction)`
 - `Timing.WaitUntilDone(anotherCoroutineHandle)` - Yields until the passed coroutine has ended
 ```cs
 IEnumerator<double> MyCoroutine()
 {
+    
     yield return Timing.WaitForOneFrame;
     GD.Print("One frame has passed");
     yield return Timing.WaitForSeconds(2.0);
     GD.Print("Two seconds have passed");
     yield return Timing.WaitUntilDone(Timing.RunCoroutine(DoSomethingElse());
     GD.Print("Finished doing something else");
+    externalCondition = false;
+    yield return Timing.WaitUntilTrue(() => externalCondition == true)
+    GD.Print("Finished with condition being true");
 }
 ```
 
